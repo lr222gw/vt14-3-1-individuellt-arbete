@@ -1,3 +1,28 @@
 ﻿body {
-    background-color: red;
+    background-color: rgb(226, 226, 226);
+    height: 95%;
+    background-image: url(../content/pics/bg.jpg);
+    background-size: 100%;    
 }
+html {
+    height: 100%;
+}
+#mainForm {
+    height: 100%;
+}
+
+#appTitle {
+    margin: 0 auto;
+    display: table;
+    font-family: monospace;
+    font-size: 50px;
+    box-shadow: inset white 0 0 93px 15px, white 0 0 95px 32px;
+}
+
+#content {
+    background-color: white;
+    height: 70%;
+    width: 75%;
+    margin: 0 auto;
+}
+

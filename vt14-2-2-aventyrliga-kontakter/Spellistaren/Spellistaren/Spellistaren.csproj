@@ -60,6 +60,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\pics\bg.jpg" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="pages\Default.aspx" />

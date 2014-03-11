@@ -10,12 +10,17 @@
     <link rel="stylesheet" href="~/style/style.css" />
 </head>
 <body>
-    <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder ID="PHContent" runat="server">
+    <form id="mainForm" runat="server">
+        <h1 id="appTitle">Spellistaren</h1>
+        <div id="content">
+            <div>
+                <asp:ContentPlaceHolder ID="PHContent" runat="server">
 
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <asp:ContentPlaceHolder ID="OutsideContent" runat="server">
         </asp:ContentPlaceHolder>
-    </div>
     </form>
         <asp:ContentPlaceHolder ID="PHScript" runat="server">
             <script type="text/javascript" src="../scripts/script.js" ></script>
