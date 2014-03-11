@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Spellistaren.model.DAL
 {
-    public static class GameDAL : DALBase
+    public class GameDAL : DALBase
     {
         public Game GetGameDetails(int UserID, int GameID)
         {
@@ -15,6 +15,9 @@ namespace Spellistaren.model.DAL
 
                 var cmd = new SqlCommand("AppSchema.Usp_GetGameDetails", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = UserID;
+                cmd.Parameters.Add("@GameID", SqlDbType.Int).Value = GameID;
 
                 conn.Open();
                 using(var reader = cmd.ExecuteReader()){

@@ -18,7 +18,7 @@ namespace Spellistaren.model
         [Required]
         public int UserID
         {
-            get;
+            get { return 1; }
             set { value = 1; } //Hårdkodar in värdet för användaren..
         }
 

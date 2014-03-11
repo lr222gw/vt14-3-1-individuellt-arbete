@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spellistaren.model.DAL; //TA BORT MIG EFTER TESTER!
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,12 @@ namespace Spellistaren.pages
                 Response.Redirect(GetRouteUrl("Default", null));
                 Context.ApplicationInstance.CompleteRequest();
             }
+        }
+
+        protected void Button_Click(object sender, EventArgs e)
+        {
+            var gg = new GameDAL();
+            gg.GetGameDetails(int.Parse(b1.Text), int.Parse(b2.Text));
         }
     }
 }
