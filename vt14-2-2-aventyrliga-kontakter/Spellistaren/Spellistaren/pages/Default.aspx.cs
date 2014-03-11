@@ -11,7 +11,11 @@ namespace Spellistaren.pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Request.RawUrl == "/pages/Default.aspx") //om man försöker gå till sidan via "original"-vägen så blir det min Routade väg!
+            {
+                Response.Redirect(GetRouteUrl("Default", null));
+                Context.ApplicationInstance.CompleteRequest();
+            }
         }
     }
 }

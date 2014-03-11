@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spellistaren.pages.Shared.Site" ViewStateMode="Disabled" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spellistaren.pages.Shared.Site" ViewStateMode="Disabled"  %>
 
 <!DOCTYPE html>
 
