@@ -1,0 +1,24 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spellistaren.pages.Shared.Site" ViewStateMode="Disabled" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <asp:ContentPlaceHolder ID="PHTitle" runat="server">
+        <title>Spellistaren</title>
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" href="~/style/style.css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="PHContent" runat="server">
+
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+        <asp:ContentPlaceHolder ID="PHScript" runat="server">
+            <script type="text/javascript" src="../scripts/script.js" ></script>
+        </asp:ContentPlaceHolder>
+</body>
+</html>
