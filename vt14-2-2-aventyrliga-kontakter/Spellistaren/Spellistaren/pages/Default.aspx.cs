@@ -39,7 +39,7 @@ namespace Spellistaren.pages
 
             gameee.GameName = "pocahontas";
 
-            gg.EditGame(gameee);
+            gg.DeleteGame(18,1);
 
         }
     }

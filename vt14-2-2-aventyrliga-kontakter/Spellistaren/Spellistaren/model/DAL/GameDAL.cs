@@ -131,6 +131,28 @@ namespace Spellistaren.model.DAL
                 throw new ArgumentException(ex.Message);
             }
         }
+        public void DeleteGame(int GameID, int UserID)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(GetConnectionString()))
+                {
+                    var cmd = new SqlCommand("AppSchema.Usp_RemoveGame", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@GameID", SqlDbType.Int).Value = GameID;
+                    cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = UserID;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                }
+            }catch(Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+
+        }
     }
 }
 
