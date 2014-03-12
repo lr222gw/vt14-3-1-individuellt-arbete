@@ -35,7 +35,11 @@ namespace Spellistaren.pages
                 ReleaseDate = null,
                 Story = null,
             };
-            gg.AddGame(game);
+            var gameee = gg.GetGameDetails(1, 18);
+
+            gameee.GameName = "pocahontas";
+
+            gg.EditGame(gameee);
 
         }
     }
