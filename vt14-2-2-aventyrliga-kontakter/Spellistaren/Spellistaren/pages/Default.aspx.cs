@@ -22,24 +22,12 @@ namespace Spellistaren.pages
 
         protected void Button_Click(object sender, EventArgs e)
         {
-            var gg = new GameDAL();
+            var gg = new ListDAL();
             //gg.GetGameDetails(int.Parse(b1.Text), int.Parse(b2.Text));
 
-            Game game = new Game
-            {
-                CompanyName = null,
-                CustomNote = null,
-                GameName = "Joni",
-                PlayersOffline = null,
-                PlayersOnline = null,
-                ReleaseDate = null,
-                Story = null,
-            };
-            var gameee = gg.GetGameDetails(1, 18);
+            gg.CreateList(1, "TuffTuffListan");
 
-            gameee.GameName = "pocahontas";
-
-            gg.DeleteGame(18,1);
+           
 
         }
     }

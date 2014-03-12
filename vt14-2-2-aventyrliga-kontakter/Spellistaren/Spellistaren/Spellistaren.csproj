@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="model\DAL\DALBase.cs" />
     <Compile Include="model\DAL\GameDAL.cs" />
+    <Compile Include="model\DAL\ListDAL.cs" />
     <Compile Include="model\Game.cs" />
     <Compile Include="model\List.cs" />
     <Compile Include="model\ListRow.cs" />
