@@ -1,4 +1,5 @@
-﻿using Spellistaren.model.DAL; //TA BORT MIG EFTER TESTER!
+﻿using Spellistaren.model;      //TA BORT MIG EFTER TESTER!
+using Spellistaren.model.DAL; //TA BORT MIG EFTER TESTER!
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,20 @@ namespace Spellistaren.pages
         protected void Button_Click(object sender, EventArgs e)
         {
             var gg = new GameDAL();
-            gg.GetGameDetails(int.Parse(b1.Text), int.Parse(b2.Text));
+            //gg.GetGameDetails(int.Parse(b1.Text), int.Parse(b2.Text));
+
+            Game game = new Game
+            {
+                CompanyName = null,
+                CustomNote = null,
+                GameName = "Joni",
+                PlayersOffline = null,
+                PlayersOnline = null,
+                ReleaseDate = null,
+                Story = null,
+            };
+            gg.AddGame(game);
+
         }
     }
 }

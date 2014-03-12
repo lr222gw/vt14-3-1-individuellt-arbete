@@ -14,7 +14,7 @@ namespace Spellistaren.model
             set;
         }
         [Required]
-        public int ScoreID
+        public int? ScoreID
         {
             get;
             set;
@@ -22,8 +22,8 @@ namespace Spellistaren.model
         [Required]
         public int UserID
         {
-            get;
-            set;
+            get { return 1; }
+            set { value = 1; }
         }
 
         [Required]
@@ -46,17 +46,17 @@ namespace Spellistaren.model
             get;
             set;
         }
-        public int PlayersOnline
+        public int? PlayersOnline
         {
             get;
             set;
         }
-        public short PlayersOffline //"short" ska vara en datatyp som innebär samma sak som SmallInt!...
+        public short? PlayersOffline //"short" ska vara en datatyp som innebär samma sak som SmallInt!...
         {
             get;
             set;
         }
-        public DateTime ReleaseDate //TODO: Kolla om det finns något mer snarlikt slq's Date.
+        public DateTime? ReleaseDate //TODO: Kolla om det finns något mer snarlikt slq's Date.
         {
             get;
             set;
