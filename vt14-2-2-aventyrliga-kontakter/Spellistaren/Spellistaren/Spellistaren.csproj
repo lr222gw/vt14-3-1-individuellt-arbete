@@ -87,6 +87,7 @@
     <Compile Include="model\Game.cs" />
     <Compile Include="model\List.cs" />
     <Compile Include="model\ListRow.cs" />
+    <Compile Include="model\Service.cs" />
     <Compile Include="pages\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

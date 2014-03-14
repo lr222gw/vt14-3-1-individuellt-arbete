@@ -72,7 +72,7 @@ namespace Spellistaren.model.DAL
             }
         }
 
-        public IEnumerable<ListRow> GetListContent(int ListID, int UserID)
+        public List<ListRow> GetListContent(int ListID, int UserID)
         {
             try
             {
@@ -90,15 +90,24 @@ namespace Spellistaren.model.DAL
                             var idx_GameID = reader.GetOrdinal("GameID");
                             var idx_ListRowID = reader.GetOrdinal("ListRowID");
 
-                            var listrowObj = new ListRow();                            
-                            while(reader.Read()){
-                                ListOfGames.Add(new ListRow
-                                {
-                                    GameID = reader.GetInt32(idx_GameID),
-                                    ListID = ListID,
-                                    ListRowID = reader.GetInt32(idx_ListRowID)
-                                });
-                            }
+                            var listrowObj = new ListRow();
+                            //if (reader.Read()) { //Vi kontrollerar först att det faktiskt finns poster att hämta ut, annars måste 0:värderna användas (se 4 och 6 rader längre ner) och dem ger error..
+                                while(reader.Read()){
+                                    ListOfGames.Add(new ListRow
+                                    {
+                                        GameID = reader.IsDBNull(idx_GameID) ?  0 : reader.GetInt32(idx_GameID), //om listan ej har rader, så blir gameID 0...
+                                        ListID = ListID,
+                                        ListRowID = reader.IsDBNull(idx_ListRowID) ? 0 : reader.GetInt32(idx_ListRowID)
+                                    });
+
+                                    // om listan ej har rader så är den inte funktionell, vi vill itne skicka tillbaka en icke funktionell lista, därför tar vi bort den posten
+                                    // om så är fallet.
+                                    if (ListOfGames[ListOfGames.Count -1].GameID == 0 || ListOfGames[ListOfGames.Count -1].ListRowID == 0) // man tar minus 1 för att hamna på rätt index...
+                                    {
+                                        ListOfGames.RemoveAt(ListOfGames.Count - 1); //tar b ort senaste tillagda värdet..
+                                    }
+                                }
+                            //}
                         }
 
 

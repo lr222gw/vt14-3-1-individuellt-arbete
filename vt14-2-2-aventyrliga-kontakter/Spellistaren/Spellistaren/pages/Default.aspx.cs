@@ -1,5 +1,4 @@
-﻿using Spellistaren.model;      //TA BORT MIG EFTER TESTER!
-using Spellistaren.model.DAL; //TA BORT MIG EFTER TESTER!
+﻿using Spellistaren.model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,11 @@ namespace Spellistaren.pages
 {
     public partial class Default : System.Web.UI.Page
     {
+        private Service _Service;
+        private Service Service
+        {
+            get { return _Service ?? (_Service = new Service()); }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.RawUrl == "/pages/Default.aspx") //om man försöker gå till sidan via "original"-vägen så blir det min Routade väg!
@@ -20,15 +24,15 @@ namespace Spellistaren.pages
             }
         }
 
-        protected void Button_Click(object sender, EventArgs e)
+
+        public IEnumerable<Spellistaren.model.List> ListRepeater_GetData()
         {
-            var gg = new ListDAL();
-            //gg.GetGameDetails(int.Parse(b1.Text), int.Parse(b2.Text));
+            return Service.GetLists();
+        }
 
-            gg.RemoveList(10,1);
-            //gg.RemoveGameFromList(11,);
-           
-
+        public IEnumerable<Spellistaren.model.Game> ListContentRepeater_GetData()
+        {
+            return Service.GetListContent(Convert.ToInt32(Request.QueryString["List"]));
         }
     }
 }

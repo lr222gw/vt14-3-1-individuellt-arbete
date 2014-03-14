@@ -13,30 +13,21 @@ namespace Spellistaren.pages {
     public partial class Default {
         
         /// <summary>
-        /// b1 control.
+        /// ListRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox b1;
+        protected global::System.Web.UI.WebControls.Repeater ListRepeater;
         
         /// <summary>
-        /// b2 control.
+        /// ListContentRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox b2;
-        
-        /// <summary>
-        /// Button control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button;
+        protected global::System.Web.UI.WebControls.Repeater ListContentRepeater;
     }
 }
