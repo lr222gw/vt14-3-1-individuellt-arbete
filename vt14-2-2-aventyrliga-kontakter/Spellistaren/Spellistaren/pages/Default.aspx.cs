@@ -25,8 +25,8 @@ namespace Spellistaren.pages
             var gg = new ListDAL();
             //gg.GetGameDetails(int.Parse(b1.Text), int.Parse(b2.Text));
 
-            gg.CreateList(1, "TuffTuffListan");
-
+            gg.RemoveList(10,1);
+            //gg.RemoveGameFromList(11,);
            
 
         }
