@@ -26,32 +26,36 @@
             </HeaderTemplate>
                 <ItemTemplate>
                     <label for="GameName">Spelets namn</label>
-                    <input id="GameName" type="text" placeholder="<%#: Item.GameName %>" />
-                           
+                    <asp:TextBox ID="GameName" placeholder="<%#: Item.GameName %>" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator runat="server" ErrorMessage="Du måste fylla i ett namn!" Text="*" ControlToValidate="GameName" SetFocusOnError="true" Display="Dynamic"></asp:RequiredFieldValidator>
+                        
+
                     <label for="CompanyName">Företag</label>
-                    <input id="CompanyName" type="text" placeholder="<%#: Item.CompanyName %>" />      
+                    <asp:TextBox runat="server" id="CompanyName" placeholder="<%#: Item.CompanyName %>" ></asp:TextBox>      
                     
                     <label for="ReleaseDate">Utgivningsdatum</label>
-                    <input id="ReleaseDate" type="text" placeholder="<%#: Item.ReleaseDate %>" />   
+                    <asp:TextBox runat="server" id="ReleaseDate" placeholder="<%#: Item.ReleaseDate %>" ></asp:TextBox>   
                     
                     <label for="PlayersOffline">Spelare Offline</label>
-                    <input id="PlayersOffline" type="text" placeholder="<%#: Item.PlayersOffline %>" />   
+                    <asp:TextBox runat="server" id="PlayersOffline" placeholder="<%#: Item.PlayersOffline %>" ></asp:TextBox>   
                     
                     <label for="PlayersOnline">Spelare Online</label>
-                    <input id="PlayersOnline" type="text" placeholder="<%#: Item.PlayersOnline %>" />   
+                    <asp:TextBox runat="server" id="PlayersOnline" placeholder="<%#: Item.PlayersOnline %>" ></asp:TextBox>   
                     
                     <label for="Story">Handling</label>
-                    <input id="Story" type="text"  value="<%#: Item.Story %>" />   <%-- Sparar ner Storyn i text, den är oftast så lång att man inte vill skriva om hela bara för att ändra något i den.. --%>
+                    <asp:TextBox runat="server" id="Story" value="<%#: Item.Story %>" ></asp:TextBox>   <%-- Sparar ner Storyn i text, den är oftast så lång att man inte vill skriva om hela bara för att ändra något i den.. --%>
                     
                     <label for="CustomNote">Egen notering</label>
-                    <input id="CustomNote" type="text" placeholder="<%#: Item.CustomNote %>" />
+                    <asp:TextBox runat="server" id="CustomNote" placeholder="<%#: Item.CustomNote %>" ></asp:TextBox>
                     
                 </ItemTemplate>
             <FooterTemplate>
                 <asp:Button ID="Sendbutton" runat="server" Text="Spara/Uppdatera" OnClick="Sendbutton_Click"/>
+                <asp:ValidationSummary ID="ValidationSummary" runat="server" />
                 </ul>
             </FooterTemplate>
         </asp:Repeater> 
+        
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="OutsideContent" runat="server">
