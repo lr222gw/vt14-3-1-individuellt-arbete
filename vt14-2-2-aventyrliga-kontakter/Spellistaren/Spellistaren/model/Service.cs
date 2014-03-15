@@ -38,5 +38,10 @@ namespace Spellistaren.model
         {
             return ListDAL.GetLists(1); //Hårdkodar in värdet 1 här, då programmet blir begränsatt till 1 användare...
         }
+
+        public Game GetGameDetails(int GameID)
+        {
+            return GameDAL.GetGameDetails(1, GameID); //Hårdkodar in värdet 1 här...
+        }
     }
 }

@@ -13,11 +13,9 @@
     <form id="mainForm" runat="server">
         <h1 id="appTitle">Spellistaren</h1>
         <div id="content">
-            <div>
                 <asp:ContentPlaceHolder ID="PHContent" runat="server">
 
                 </asp:ContentPlaceHolder>
-            </div>
         </div>
         <asp:ContentPlaceHolder ID="OutsideContent" runat="server">
         </asp:ContentPlaceHolder>

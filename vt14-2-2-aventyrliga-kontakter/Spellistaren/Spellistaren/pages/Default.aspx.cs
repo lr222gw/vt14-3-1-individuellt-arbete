@@ -34,5 +34,11 @@ namespace Spellistaren.pages
         {
             return Service.GetListContent(Convert.ToInt32(Request.QueryString["List"]));
         }
+
+        public Game GameDetailsRepeater_GetData()
+        {
+            
+            return Service.GetGameDetails(Convert.ToInt32(Request.QueryString["amp;GameID"]));
+        }
     }
 }

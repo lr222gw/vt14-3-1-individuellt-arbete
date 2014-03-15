@@ -9,7 +9,7 @@
             <ItemTemplate>
                 
                     <li>
-                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#: "Default.aspx?List=" + Server.UrlEncode((Item.ListID).ToString())  %>' Text='<%#: Item.ListName %>'></asp:HyperLink>
+                        <asp:HyperLink runat="server" NavigateUrl='<%#: "Default.aspx?List=" + Server.UrlEncode((Item.ListID).ToString())  %>' Text='<%#: Item.ListName %>'></asp:HyperLink>
                     </li>
                 
             </ItemTemplate>
@@ -26,12 +26,67 @@
             </HeaderTemplate>
                 <ItemTemplate>
                     <li>
-                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#: "Default.aspx?List="+ Request.QueryString["List"] + Server.UrlEncode((Item.GameID).ToString())  %>' Text='<%#: Item.GameName %>'></asp:HyperLink>
+                        <asp:HyperLink runat="server" NavigateUrl='<%#: "Default.aspx?List="+ Request.QueryString["List"] + "&GameID=" + Server.UrlEncode((Item.GameID).ToString())  %>' Text='<%#: Item.GameName %>'></asp:HyperLink>
                     </li>
                 </ItemTemplate>
             <FooterTemplate>
                 </ul>
             </FooterTemplate>
+        </asp:Repeater>
+    </div>
+
+    <div id="gameDetails">
+        <asp:Repeater ID="GameDetailsRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="GameDetailsRepeater_GetData">
+            <HeaderTemplate>
+                <ul>
+            </HeaderTemplate>
+                <ItemTemplate>
+                    <li id="gamename">
+                        <h1>
+                            <%#: Item.GameName  %>
+                        </h1>
+                    </li>
+                    <li>
+                        <h4>Företag</h4>
+                        <p>
+                            <%#: Item.CompanyName  %>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Utgivningsdatum</h4>
+                        <p>
+                            <%#: Item.ReleaseDate  %>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Spelare Offline</h4>
+                        <p>
+                            <%#: Item.PlayersOffline  %>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Spelare Online</h4>
+                        <p>
+                            <%#: Item.PlayersOnline  %>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Handling</h4>
+                        <p>
+                            <%#: Item.Story  %>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Egen notering</h4>
+                        <p>
+                            <%#: Item.CustomNote  %>
+                        </p>
+                    </li>
+                </ItemTemplate>
+            <FooterTemplate>
+                </ul>
+            </FooterTemplate>
+
         </asp:Repeater>
     </div>
 

@@ -21,8 +21,90 @@ html {
 
 #content {
     background-color: white;
-    height: 70%;
     width: 75%;
     margin: 0 auto;
+    padding-bottom: 30px;
+    padding-top: 20px;
 }
 
+#gameDetails {
+width: 75%;
+display: block;
+background-color: gray;
+margin: 0 auto;
+overflow: auto;
+height: 30em;
+border: 1px solid black;
+box-shadow: black 0 0 20px -5px;
+font-family: sans-serif;
+}
+#gameDetails ul li {
+list-style-type: none;
+list-style-type: none;
+margin-top: -10px;
+}
+
+#gameDetails ul li h4 {
+margin-bottom: -15px;
+}
+
+#Lists {
+width: 22%;
+display: block;
+background-color: gray;
+margin: 0 auto;
+overflow: auto;
+height: 250px;
+border: 1px solid black;
+box-shadow: black 0 0 20px -5px;
+font-family: sans-serif;
+font-size: 25px;
+line-height: 35px;
+float: left;
+margin-left: 20%;
+}
+#Lists ul li a {
+background-color: rgb(182, 181, 181);
+display: block;
+border-bottom: black 1px solid;
+text-decoration: none;
+}
+#Lists ul li a:hover {
+background-color: rgb(99, 99, 99);
+}
+
+#Lists ul {
+padding: 0px;
+margin: 0;
+}
+
+#listContent {
+width: 22%;
+display: block;
+background-color: gray;
+margin: 0 auto;
+overflow: auto;
+height: 250px;
+border: 1px solid black;
+box-shadow: black 0 0 20px -5px;
+font-family: sans-serif;
+font-size: 15px;
+line-height: 31px;
+float: left;
+margin-left: 15%;
+margin-bottom: 30px;
+}
+#listContent ul li a {
+background-color: rgb(182, 181, 181);
+display: block;
+padding: 2px;
+border-bottom: black 1px solid;
+text-decoration: none;
+}
+#listContent ul {
+padding: 0px;
+margin: 0;
+}
+#listContent ul li a:hover {
+background-color: rgb(99, 99, 99);
+}
