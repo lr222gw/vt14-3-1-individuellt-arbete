@@ -11,6 +11,7 @@ namespace Spellistaren.App_Start
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.MapPageRoute("Default", "Listor", "~/pages/Default.aspx");
+            routes.MapPageRoute("AddOrEdit", "Listor/Edit", "~/pages/AddOrEdit.aspx");
         }
     }
 }

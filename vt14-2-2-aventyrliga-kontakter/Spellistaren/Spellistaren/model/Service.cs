@@ -43,5 +43,23 @@ namespace Spellistaren.model
         {
             return GameDAL.GetGameDetails(1, GameID); //Hårdkodar in värdet 1 här...
         }
+        public List<Game> GetAllGamesByUserID()
+        {
+            return GameDAL.GetAllGamesByUserID(1); //Hårdkodar in värdet 1 här också.. lite synd men visst!
+        }
+
+        internal static Game getEmptyGame()
+        {
+            return new Game { 
+            CompanyName = "",
+            GameName = "",
+            PlayersOffline = null,
+            PlayersOnline = null,
+            ReleaseDate = null,
+            Story = "",
+            CustomNote = "",
+            UserID = 1
+            };
+        }
     }
 }

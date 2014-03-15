@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Listor" Language="C#" MasterPageFile="~/pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Spellistaren.pages.Default" %>
 
 <asp:Content ID="Content" ContentPlaceHolderID="PHContent" runat="server">
+
     <div id="Lists">
         <asp:Repeater ID="ListRepeater" runat="server" ItemType="Spellistaren.model.List" SelectMethod="ListRepeater_GetData">
             <HeaderTemplate>
@@ -9,7 +10,7 @@
             <ItemTemplate>
                 
                     <li>
-                        <asp:HyperLink runat="server" NavigateUrl='<%#: "Default.aspx?List=" + Server.UrlEncode((Item.ListID).ToString())  %>' Text='<%#: Item.ListName %>'></asp:HyperLink>
+                        <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("Default", null) + "?List=" + Server.UrlEncode((Item.ListID).ToString())  %>' Text='<%#: Item.ListName %>'></asp:HyperLink>
                     </li>
                 
             </ItemTemplate>
@@ -26,7 +27,7 @@
             </HeaderTemplate>
                 <ItemTemplate>
                     <li>
-                        <asp:HyperLink runat="server" NavigateUrl='<%#: "Default.aspx?List="+ Request.QueryString["List"] + "&GameID=" + Server.UrlEncode((Item.GameID).ToString())  %>' Text='<%#: Item.GameName %>'></asp:HyperLink>
+                        <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("Default", null)+"?List="+ Request.QueryString["List"] + "&GameID=" + Server.UrlEncode((Item.GameID).ToString())  %>' Text='<%#: Item.GameName %>'></asp:HyperLink>
                     </li>
                 </ItemTemplate>
             <FooterTemplate>

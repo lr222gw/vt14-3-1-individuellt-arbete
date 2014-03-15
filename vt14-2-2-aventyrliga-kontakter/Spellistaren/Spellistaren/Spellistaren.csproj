@@ -63,6 +63,7 @@
     <Content Include="content\pics\bg.jpg" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <Content Include="pages\AddOrEdit.aspx" />
     <Content Include="pages\Default.aspx" />
     <Content Include="pages\Shared\Errorpage.html" />
     <Content Include="pages\Shared\Site.Master" />
@@ -88,6 +89,13 @@
     <Compile Include="model\List.cs" />
     <Compile Include="model\ListRow.cs" />
     <Compile Include="model\Service.cs" />
+    <Compile Include="pages\AddOrEdit.aspx.cs">
+      <DependentUpon>AddOrEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\AddOrEdit.aspx.designer.cs">
+      <DependentUpon>AddOrEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

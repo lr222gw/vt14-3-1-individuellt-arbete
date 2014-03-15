@@ -153,6 +153,53 @@ namespace Spellistaren.model.DAL
             }
 
         }
+        public List<Game> GetAllGamesByUserID(int UserID)
+        {
+            List<Game> allGamesByUserID = new List<Game>();
+            using(var conn = new SqlConnection(GetConnectionString())){
+                var cmd = new SqlCommand("AppSchema.Usp_GetAllGamesByUserID", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = UserID;
+
+                conn.Open();
+                using(var reader = cmd.ExecuteReader()){
+                        var idx_GameID = reader.GetOrdinal("GameID");
+                        var idx_ScoreID = reader.GetOrdinal("ScoreID");
+                        var idx_UserID = reader.GetOrdinal("UserID");
+                        var idx_GameName = reader.GetOrdinal("GameName");
+                        var idx_CompanyName = reader.GetOrdinal("CompanyName");
+                        var idx_Story = reader.GetOrdinal("Story");
+                        var idx_PlayersOnline = reader.GetOrdinal("PlayersOnline");
+                        var idx_PlayersOffline = reader.GetOrdinal("PlayersOffline");
+                        var idx_ReleaseDate = reader.GetOrdinal("ReleaseDate");
+                        var idx_CustomNote = reader.GetOrdinal("CustomNote");
+
+                        while(reader.Read())
+                        {
+
+                            allGamesByUserID.Add(new Game
+                            {
+                                CompanyName = reader.IsDBNull(idx_CompanyName) ? null : reader.GetString(idx_CompanyName),
+                                CustomNote = reader.IsDBNull(idx_CustomNote) ? null : reader.GetString(idx_CustomNote),
+                                GameID =  reader.GetInt32(idx_GameID),
+                                GameName = reader.GetString(idx_GameName),
+                                PlayersOffline = reader.IsDBNull(idx_PlayersOffline) ? (short?)null : reader.GetInt16(idx_PlayersOffline), //Tydligen ska int16 vara samma som smallint, vet inte om detta är sant, får bli upp till bevis..
+                                PlayersOnline = reader.IsDBNull(idx_PlayersOnline) ? (int?)null : reader.GetInt32(idx_PlayersOnline),
+                                ReleaseDate = reader.IsDBNull(idx_ReleaseDate) ? (DateTime?) null : reader.GetDateTime(idx_ReleaseDate),
+                                ScoreID = reader.IsDBNull(idx_ScoreID) ? (int?) null : reader.GetInt32(idx_ScoreID),
+                                Story = reader.IsDBNull(idx_Story) ? null : reader.GetString(idx_Story),
+                                UserID = reader.GetInt32(idx_UserID)
+                            });
+                            
+                        }
+
+                        return allGamesByUserID;
+                    
+                }
+                
+            }
+             
+        }
     }
 }
 
