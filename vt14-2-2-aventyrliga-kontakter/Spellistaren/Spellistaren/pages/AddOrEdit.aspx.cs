@@ -30,7 +30,7 @@ namespace Spellistaren.pages
 
         public IEnumerable<Spellistaren.model.Game> GamelistRepeater_GetData()
         {
-            return Service.GetAllGamesByUserID();
+            return Service.GetAllGamesByUserID(); 
         }
 
         public Game GameDetailRepeater_GetData()
@@ -40,15 +40,39 @@ namespace Spellistaren.pages
             }
             else// om GameID är noll, då ska fälten läggas ut med tom data som sedan kan schysteras till ett nytt spel.
             {
+                
                 return Service.getEmptyGame();
             }
         }
 
         protected void Sendbutton_Click(object sender, EventArgs e)
         {
+            
             var gameid = Convert.ToInt32(Request.QueryString["GameID"]);
             if (gameid == 0) //om gameid == 0 så är det inte ett existerande spel, utan ett spel som ska läggas till
             {
+
+                GameDetailRepeater.FindControl("GameName");
+                if (ModelState.IsValid)
+                {
+                    var GameName = GameDetailRepeater.FindControl("GameName") as TextBox;
+                    var CompanyName = GameDetailRepeater.FindControl("CompanyName") as TextBox;
+                    var ReleaseDate = GameDetailRepeater.FindControl("ReleaseDate") as TextBox;
+                    var PlayersOffline = GameDetailRepeater.FindControl("PlayersOffline") as TextBox;
+                    var PlayersOnline = GameDetailRepeater.FindControl("PlayersOnline") as TextBox;
+                    var Story = GameDetailRepeater.FindControl("Story") as TextBox;
+                    var CustomNote = GameDetailRepeater.FindControl("CustomNote") as TextBox;
+
+                    Service.AddGame(
+                        CompanyName.Text.ToString() == "" ? null : CompanyName.Text.ToString(), // om det står något annat än "" så ska det istället stå null, om det står något så ska det användas..
+                        GameName.Text.ToString() == "" ? null : GameName.Text.ToString(),
+                        PlayersOffline.Text.ToString() == "" ? null : PlayersOffline.Text.ToString(),
+                        PlayersOnline.Text.ToString() == "" ? null : PlayersOnline.Text.ToString(),
+                        ReleaseDate.Text.ToString() == "" ? null : ReleaseDate.Text.ToString(),
+                        Story.Text.ToString() == "" ? null : Story.Text.ToString(),
+                        CustomNote.Text.ToString() == "" ? null : CustomNote.Text.ToString()
+                        );                                            
+                }
                 
             }
             else // Allt annat är spel som ska uppdateras..
@@ -56,6 +80,14 @@ namespace Spellistaren.pages
 
             }
         }
+        public string TextBoxValue(RepeaterItemCollection itm, string controlID ) // denna metod är till för att hämta ut värden ur textboxar på en Repeater..
+        {               //Metoden tar emot två parametrar: itm = Den repeater.Item List som controllen ska letas i. controlID = ID't på kontrollen vi letar efter..
+            for (var i = 0; i < itm.Count; i++ )
+            {
+                
+            }
+            return null;
+        } 
 
         protected void addnewgame_Click(object sender, EventArgs e)
         {

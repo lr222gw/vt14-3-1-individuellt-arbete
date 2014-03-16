@@ -1,8 +1,10 @@
 ﻿using Spellistaren.model.DAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 
 namespace Spellistaren.model
 {
@@ -48,7 +50,7 @@ namespace Spellistaren.model
             return GameDAL.GetAllGamesByUserID(1); //Hårdkodar in värdet 1 här också.. lite synd men visst!
         }
 
-        internal static Game getEmptyGame()
+        public static Game getEmptyGame() //Denna var förut Internal static, allt fungerade då, ändrade till public, vet ej vad internal är..
         {
             return new Game { 
             CompanyName = "",
@@ -61,5 +63,56 @@ namespace Spellistaren.model
             UserID = 1
             };
         }
+        public static void AddGame(string? CompanyName, string GameName, string? PlayersOffline, string? PlayersOnline, string? ReleaseDate, string? Story, string? customNote) // tar ej emot UserID, då den alltid är 1..
+        {
+
+            try
+            {
+                short? newPlayerOffline;
+                int? newPlayersOffline;
+                DateTime? newReleaseDate;
+                if (PlayersOffline == null)
+                {
+                    newPlayerOffline = null;
+                }
+                else {newPlayerOffline = PlayersOffline}
+
+                if (PlayersOffline == null)
+                {
+                    newPlayersOffline == null;
+                }
+                else {newPlayersOffline PlayersOffline}
+
+                var gameToAdd = new Game
+                {
+                    CompanyName =  CompanyName,
+                    CustomNote = customNote,
+                    GameName = GameName,
+                    PlayersOffline = short.Parse(newPlayerOffline),
+                    PlayersOnline = int.Parse(PlayersOffline),
+                    ReleaseDate = DateTime.Parse(ReleaseDate),
+                    Story = Story
+                };
+
+                var validationContext = new ValidationContext(gameToAdd); // skapar ett validationcontext objekt för att validera datan i gameToAdd..
+                var validationErrorList = new List<ValidationResult>();
+                if(!Validator.TryValidateObject(gameToAdd, validationContext, validationErrorList, true)){
+                    //om validering (^) misslyckas så ska ett undantag kastas..
+                    throw new ValidationException("Spelet innehöll ogiltig data..");
+
+                }
+                else
+                {
+
+                }
+
+            }
+            catch
+            {
+
+            }
+
+        }
+
     }
 }

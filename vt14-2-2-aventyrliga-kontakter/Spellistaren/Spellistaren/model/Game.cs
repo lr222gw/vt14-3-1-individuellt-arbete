@@ -34,14 +34,14 @@ namespace Spellistaren.model
             set;
         }
         [StringLength(35)]
-        public string CompanyName
+        public string? CompanyName
         {
             get;
             set;
         }
 
         [StringLength(1000)]
-        public string Story
+        public string? Story
         {
             get;
             set;
@@ -62,11 +62,11 @@ namespace Spellistaren.model
             set;
         }
         [StringLength(2000)]
-        public string CustomNote
+        public string? CustomNote
         {
             get;
             set;
         }
-
+        
     }
 }
