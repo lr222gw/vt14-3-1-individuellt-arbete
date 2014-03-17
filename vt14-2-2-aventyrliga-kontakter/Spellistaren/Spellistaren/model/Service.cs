@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.ModelBinding;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Spellistaren.model
 {
@@ -63,9 +65,9 @@ namespace Spellistaren.model
             UserID = 1
             };
         }
-        public static void AddGame(string? CompanyName, string GameName, string? PlayersOffline, string? PlayersOnline, string? ReleaseDate, string? Story, string? customNote) // tar ej emot UserID, då den alltid är 1..
+        public void AddGame(string CompanyName, string GameName, string PlayersOffline, string PlayersOnline, string ReleaseDate, string Story, string customNote, out string problem) // tar ej emot UserID, då den alltid är 1..
         {
-
+            problem = null; // om allt går rätt kommer problem vara null...
             try
             {
                 short? newPlayerOffline;
@@ -75,43 +77,103 @@ namespace Spellistaren.model
                 {
                     newPlayerOffline = null;
                 }
-                else {newPlayerOffline = PlayersOffline}
+                else {newPlayerOffline = short.Parse(PlayersOffline.ToString());}// om värdet ej är null så sska det sparas. värdet kan bara parsas från string, så först gör vi värdet till string sen parsar vi till short..
 
                 if (PlayersOffline == null)
                 {
-                    newPlayersOffline == null;
+                    newPlayersOffline = null;
                 }
-                else {newPlayersOffline PlayersOffline}
+                else { newPlayersOffline = short.Parse(PlayersOffline.ToString()); }
+
+                if (ReleaseDate == null)
+                {
+                    newReleaseDate = null;
+                }
+                else { newReleaseDate = DateTime.Parse(ReleaseDate.ToString()); }
 
                 var gameToAdd = new Game
                 {
                     CompanyName =  CompanyName,
                     CustomNote = customNote,
                     GameName = GameName,
-                    PlayersOffline = short.Parse(newPlayerOffline),
-                    PlayersOnline = int.Parse(PlayersOffline),
-                    ReleaseDate = DateTime.Parse(ReleaseDate),
-                    Story = Story
+                    PlayersOffline = newPlayerOffline,
+                    PlayersOnline = newPlayersOffline,
+                    ReleaseDate = newReleaseDate,
+                    Story = Story,
+                    ScoreID = 11 //hårdkådar denna eftersom jag inte har med betyg...
                 };
 
                 var validationContext = new ValidationContext(gameToAdd); // skapar ett validationcontext objekt för att validera datan i gameToAdd..
                 var validationErrorList = new List<ValidationResult>();
                 if(!Validator.TryValidateObject(gameToAdd, validationContext, validationErrorList, true)){
                     //om validering (^) misslyckas så ska ett undantag kastas..
-                    throw new ValidationException("Spelet innehöll ogiltig data..");
+                    problem = "Spelet innehöll ogiltig data..";
+                    throw new ValidationException(problem);
 
                 }
                 else
                 {
-
+                    GameDAL.AddGame(gameToAdd);
                 }
 
             }
             catch
             {
-
+               // throw new ArgumentException("ett problem uppstod vid tilläggningen av spelet..");
             }
 
+        }
+        public void EditGame(TextBox[] tbArr, int GameID)
+        {
+            try
+            {
+                short? pOffline;
+                int? pOnline;
+                DateTime? dateAndTime;
+                if(tbArr[3].Text == ""){
+                    pOffline = null;
+                }
+                else
+                {
+                    string h = tbArr[3].Text;
+                    pOffline = short.Parse(h);
+                }
+                if (tbArr[4].Text == "")
+                {
+                    pOnline = null;
+                }
+                else
+                {
+                    string h = tbArr[4].Text;
+                    pOnline = int.Parse(h);
+                }
+                if (tbArr[2].Text == "")
+                {
+                    dateAndTime = null;
+                }
+                else
+                {
+                    var h = tbArr[2].Text;
+                    dateAndTime = DateTime.Parse(h);
+                }
+
+                //först hämtar vi ner spelet vi ska redigera..
+                Game gameToEdit = GameDAL.GetGameDetails(1, GameID);
+                //Sen tar vi fram den nya datan vi vill byta ut i spelet..
+                gameToEdit.PlayersOffline = pOffline;
+                gameToEdit.PlayersOnline = pOnline;
+                gameToEdit.Story = tbArr[5].Text;
+                gameToEdit.ReleaseDate = dateAndTime;
+                gameToEdit.CompanyName = tbArr[1].Text;
+                gameToEdit.CustomNote = tbArr[6].Text;
+                gameToEdit.GameName = tbArr[0].Text;
+
+                GameDAL.EditGame(gameToEdit);
+            }catch
+            {
+                throw new Exception("Något är fel på datan som försökte matas in.");      
+            }
+            
         }
 
     }

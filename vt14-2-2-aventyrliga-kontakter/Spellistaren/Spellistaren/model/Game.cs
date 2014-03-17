@@ -34,14 +34,14 @@ namespace Spellistaren.model
             set;
         }
         [StringLength(35)]
-        public string? CompanyName
+        public string CompanyName // tog bort "?" från "string?" för att det tydlige inte behövde vara så, string är alltid nullable..
         {
             get;
             set;
         }
 
         [StringLength(1000)]
-        public string? Story
+        public string Story
         {
             get;
             set;
@@ -56,13 +56,27 @@ namespace Spellistaren.model
             get;
             set;
         }
+
+        private DateTime? _ReleaseDate;
         public DateTime? ReleaseDate //TODO: Kolla om det finns något mer snarlikt slq's Date.
         {
-            get;
-            set;
+            get{
+                if (_ReleaseDate == null)
+                {
+                    return new DateTime(1,1,1);
+                }
+                else
+                {
+                    return _ReleaseDate;
+                }
+                
+            }
+            set{
+                _ReleaseDate = value;
+            }
         }
         [StringLength(2000)]
-        public string? CustomNote
+        public string CustomNote
         {
             get;
             set;

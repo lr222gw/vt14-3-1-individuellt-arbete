@@ -20,12 +20,14 @@ namespace Spellistaren.pages
             if (Request.RawUrl == "/pages/AddOrEdit.aspx") //om man försöker gå till sidan via "original"-vägen så blir det min Routade väg!
             {
                 Response.Redirect(GetRouteUrl("AddOrEdit", null));
-                Context.ApplicationInstance.CompleteRequest();
+                Context.ApplicationInstance.CompleteRequest();                
             }
             if (Request.QueryString["GameID"] != null) // om GameID inte är null så finns det ett gameId att hämta..
             { //om det finns ett GameID att hämta så ska man kunna göra något med det, alltså ska Repeater2 bli visible..
                 GameDetailRepeater.Visible = true;
+                Sendbutton.Visible = true;
             }
+
         }
 
         public IEnumerable<Spellistaren.model.Game> GamelistRepeater_GetData()
@@ -48,37 +50,80 @@ namespace Spellistaren.pages
         protected void Sendbutton_Click(object sender, EventArgs e)
         {
             
-            var gameid = Convert.ToInt32(Request.QueryString["GameID"]);
-            if (gameid == 0) //om gameid == 0 så är det inte ett existerande spel, utan ett spel som ska läggas till
-            {
-
-                GameDetailRepeater.FindControl("GameName");
-                if (ModelState.IsValid)
+                var gameid = Convert.ToInt32(Request.QueryString["GameID"]);
+                if (gameid == 0) //om gameid == 0 så är det inte ett existerande spel, utan ett spel som ska läggas till
                 {
-                    var GameName = GameDetailRepeater.FindControl("GameName") as TextBox;
-                    var CompanyName = GameDetailRepeater.FindControl("CompanyName") as TextBox;
-                    var ReleaseDate = GameDetailRepeater.FindControl("ReleaseDate") as TextBox;
-                    var PlayersOffline = GameDetailRepeater.FindControl("PlayersOffline") as TextBox;
-                    var PlayersOnline = GameDetailRepeater.FindControl("PlayersOnline") as TextBox;
-                    var Story = GameDetailRepeater.FindControl("Story") as TextBox;
-                    var CustomNote = GameDetailRepeater.FindControl("CustomNote") as TextBox;
 
-                    Service.AddGame(
-                        CompanyName.Text.ToString() == "" ? null : CompanyName.Text.ToString(), // om det står något annat än "" så ska det istället stå null, om det står något så ska det användas..
-                        GameName.Text.ToString() == "" ? null : GameName.Text.ToString(),
-                        PlayersOffline.Text.ToString() == "" ? null : PlayersOffline.Text.ToString(),
-                        PlayersOnline.Text.ToString() == "" ? null : PlayersOnline.Text.ToString(),
-                        ReleaseDate.Text.ToString() == "" ? null : ReleaseDate.Text.ToString(),
-                        Story.Text.ToString() == "" ? null : Story.Text.ToString(),
-                        CustomNote.Text.ToString() == "" ? null : CustomNote.Text.ToString()
-                        );                                            
-                }
+                    GameDetailRepeater.FindControl("GameName");
+                    if (ModelState.IsValid) // kontrollerar så att fälten som måste vara i fyllda verkligen är det. (spelets namn..)
+                    {
+                        if(IsValid)
+                        {
+                            var GameName = GameDetailRepeater.FindControl("GameName") as TextBox;
+                            var CompanyName = GameDetailRepeater.FindControl("CompanyName") as TextBox;
+                            var ReleaseDate = GameDetailRepeater.FindControl("ReleaseDate") as TextBox;
+                            var PlayersOffline = GameDetailRepeater.FindControl("PlayersOffline") as TextBox;
+                            var PlayersOnline = GameDetailRepeater.FindControl("PlayersOnline") as TextBox;
+                            var Story = GameDetailRepeater.FindControl("Story") as TextBox;
+                            var CustomNote = GameDetailRepeater.FindControl("CustomNote") as TextBox;
+                            string problem; // skapar denna så att jag kan få en out-variabel att testa senare..
+
+                            Service.AddGame(
+                                CompanyName.Text.ToString() == "" ? null : CompanyName.Text.ToString(),  // om det står något annat än "" så ska det istället stå null, om det står något så ska det användas..
+                                GameName.Text.ToString() == "" ? null : GameName.Text.ToString(),
+                                PlayersOffline.Text.ToString() == "" ? null : PlayersOffline.Text.ToString(),
+                                PlayersOnline.Text.ToString() == "" ? null : PlayersOnline.Text.ToString(),
+                                ReleaseDate.Text.ToString() == "" ? null : ReleaseDate.Text.ToString(),
+                                Story.Text.ToString() == "" ? null : Story.Text.ToString(),
+                                CustomNote.Text.ToString() == "" ? null : CustomNote.Text.ToString(),
+                                out problem
+                                );
+                            if (problem != null) // om problem inte är null, då är allt som det ska. Annars så är det fel i klassen..
+                            {
+                                var validator = new CustomValidator { };
+                                validator.IsValid = false;
+                                validator.ErrorMessage = problem; //Skriv ut vad problem är för något.. (kan bara vara en sak..)
+                                Page.Validators.Add(validator);
+                                //ModelState.AddModelError(string.Empty, problem); 
+                            }
+                            else
+                            {                        
+                                Response.Redirect(GetRouteUrl("AddOrEdit", null)); //Gör en PRG
+                                Context.ApplicationInstance.CompleteRequest();
+                            }
+                        }
+                    }
                 
-            }
-            else // Allt annat är spel som ska uppdateras..
-            {
+                }
+                else // Allt annat är spel som ska uppdateras..
+                {
+                    try { 
+                        //hör behöver jag inte kolla om något är Valid eller inte, just för att man inte kan skicka med ogiltiga värden.. 
+                        //(tex: du kan ej skicka med null om du inte anger något, då skickas placeholder värdet med istället..
 
-            }
+                        //Nu gör jag en array med alla dessa saker och skickar listan till Service.EditGame() där datan från listan sammansätts och blir ett objekt.
+                        TextBox[] textboxArr = new TextBox[7];
+                        textboxArr[0] = GameDetailRepeater.FindControl("GameName") as TextBox;
+                        textboxArr[1] = GameDetailRepeater.FindControl("CompanyName") as TextBox;
+                        textboxArr[2] = GameDetailRepeater.FindControl("ReleaseDate") as TextBox;
+                        textboxArr[3] = GameDetailRepeater.FindControl("PlayersOffline") as TextBox;
+                        textboxArr[4] = GameDetailRepeater.FindControl("PlayersOnline") as TextBox;
+                        textboxArr[5] = GameDetailRepeater.FindControl("Story") as TextBox;
+                        textboxArr[6] = GameDetailRepeater.FindControl("CustomNote") as TextBox;
+                     
+                   
+                        Service.EditGame(textboxArr, gameid);
+                        Response.Redirect(GetRouteUrl("AddOrEdit", null)); //Gör en PRG
+                        Context.ApplicationInstance.CompleteRequest();
+                    }
+                    catch(Exception ex){ 
+                    Page.Validators.Add(new CustomValidator{
+                        ErrorMessage = "Något är fel med den inmatade datan.." + ex,
+                        IsValid = false
+                        });
+                    }
+                }
+            
         }
         public string TextBoxValue(RepeaterItemCollection itm, string controlID ) // denna metod är till för att hämta ut värden ur textboxar på en Repeater..
         {               //Metoden tar emot två parametrar: itm = Den repeater.Item List som controllen ska letas i. controlID = ID't på kontrollen vi letar efter..
@@ -93,6 +138,11 @@ namespace Spellistaren.pages
         {
             Response.Redirect(GetRouteUrl("AddOrEdit", null) + "?GameID=0");
             Context.ApplicationInstance.CompleteRequest();
+        }
+
+        protected void GameDetailRepeater_PageIndexChanging(object sender, FormViewPageEventArgs e)
+        {
+
         }
 
 
