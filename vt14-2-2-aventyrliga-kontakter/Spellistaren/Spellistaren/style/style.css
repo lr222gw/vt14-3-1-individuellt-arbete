@@ -25,6 +25,7 @@ html {
     margin: 0 auto;
     padding-bottom: 30px;
     padding-top: 20px;
+    height: 100%; /*Ska denna vara här? hmm..*/
 }
 
 #gameDetails {
@@ -78,7 +79,7 @@ padding: 0px;
 margin: 0;
 }
 
-#listContent, #gameToAddList, #allGameList {
+#listContent, #PHContent_gameToAddList, #allGameList {
 width: 22%;
 display: block;
 background-color: gray;
@@ -94,17 +95,34 @@ float: left;
 margin-left: 15%;
 margin-bottom: 30px;
 }
-#listContent ul li a, #gameToAddList ul li a, #allGameList ul li a {
+#listContent ul li a, #PHContent_gameToAddList ul li a, #allGameList ul li a {
 background-color: rgb(182, 181, 181);
 display: block;
 padding: 2px;
 border-bottom: black 1px solid;
 text-decoration: none;
 }
-#listContent ul, #gameToAddList ul, #allGameList ul {
+#listContent ul, #PHContent_gameToAddList ul, #allGameList ul {
 padding: 0px;
 margin: 0;
 }
-#listContent ul li a:hover, #gameToAddList ul li a:hover, #allGameList ul li a:hover{
+#listContent ul li a:hover, #PHContent_gameToAddList ul li a:hover, #allGameList ul li a:hover{
 background-color: rgb(99, 99, 99);
+}
+
+#blackborder {
+background-color: black;
+display: block;
+width: 100%;
+float: left;
+color: white;
+min-height: 2px;
+}
+
+.selected {
+    background-color:black;
+}
+
+.boxes {
+display: block;
 }

@@ -26,6 +26,7 @@ namespace Spellistaren.pages
             { //om det finns ett GameID att hämta så ska man kunna göra något med det, alltså ska Repeater2 bli visible..
                 GameDetailRepeater.Visible = true;
                 Sendbutton.Visible = true;
+                EraseButton.Visible = true;
             }
             if (Request.QueryString["amp;GameID"] != null && Request.QueryString["List"] != null) // om både gameID och List finns så är ett spel markerat, då ska man få möjligheten att ta bort det.
             {
@@ -33,8 +34,16 @@ namespace Spellistaren.pages
             }
             if (Request.QueryString["List"] != null)
             {
+                gameToAddList.Visible = true;
                 gameToAddListRepeater.Visible = true;
+                
             }
+
+            if (Request.QueryString["amp;GameToAddID"] != null && Request.QueryString["List"] != null)
+            {
+                addToListButton.Visible = true;
+            }
+
 
         }
 
@@ -164,7 +173,42 @@ namespace Spellistaren.pages
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
             Service.RemoveGameFromList(Convert.ToInt32(Request.QueryString[("List")]), Convert.ToInt32(Request.QueryString["amp;GameID"]));
-            Response.Redirect(Request.RawUrl+"?List="+Convert.ToInt32(Request.QueryString[("List")]));
+            Response.Redirect(GetRouteUrl("AddOrEdit", null)+"?List="+Convert.ToInt32(Request.QueryString[("List")]));
+            Context.ApplicationInstance.CompleteRequest();
+        }
+
+        protected void addToListButton_Click(object sender, EventArgs e)
+        {
+            if (Service.existonlistBool(Convert.ToInt32(Request.QueryString["List"]), Convert.ToInt32(Request.QueryString["amp;GameToAddID"])))
+            {
+                Service.AddGameToList(Convert.ToInt32(Request.QueryString["amp;GameToAddID"]), Convert.ToInt32(Request.QueryString["List"]));
+                Response.Redirect(GetRouteUrl("AddOrEdit", null) + "?List=" + Convert.ToInt32(Request.QueryString[("List")]));
+                Context.ApplicationInstance.CompleteRequest();
+                //TODO: lägg till meddelande angående "Finns redan i listan"
+            }
+            else
+            {
+                Page.Validators.Add(new CustomValidator
+                {
+                    IsValid = false,
+                    ErrorMessage = "Spelet finns redan i listan"
+                });
+            }
+        }
+
+        protected void EraseButton_Click(object sender, EventArgs e)
+        {
+            
+            Service.DeleteGame(Convert.ToInt32(Request.QueryString["GameID"]));
+            Response.Redirect(GetRouteUrl("AddOrEdit", null));
+            Context.ApplicationInstance.CompleteRequest();
+            
+            
+        }
+
+        protected void Close_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(GetRouteUrl("AddOrEdit", null));
             Context.ApplicationInstance.CompleteRequest();
         }
 

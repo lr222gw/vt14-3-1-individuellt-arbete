@@ -31,6 +31,15 @@ namespace Spellistaren.pages {
         protected global::System.Web.UI.WebControls.Button addnewgame;
         
         /// <summary>
+        /// Close control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Close;
+        
+        /// <summary>
         /// GameDetailRepeater control.
         /// </summary>
         /// <remarks>
@@ -38,15 +47,6 @@ namespace Spellistaren.pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FormView GameDetailRepeater;
-        
-        /// <summary>
-        /// ValidationSummary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary;
         
         /// <summary>
         /// Sendbutton control.
@@ -58,6 +58,24 @@ namespace Spellistaren.pages {
         protected global::System.Web.UI.WebControls.Button Sendbutton;
         
         /// <summary>
+        /// EraseButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button EraseButton;
+        
+        /// <summary>
+        /// ValidationSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary;
+        
+        /// <summary>
         /// ListRepeater control.
         /// </summary>
         /// <remarks>
@@ -65,6 +83,15 @@ namespace Spellistaren.pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater ListRepeater;
+        
+        /// <summary>
+        /// DeleteButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DeleteButton;
         
         /// <summary>
         /// ListContentRepeater control.
@@ -76,13 +103,22 @@ namespace Spellistaren.pages {
         protected global::System.Web.UI.WebControls.Repeater ListContentRepeater;
         
         /// <summary>
-        /// DeleteButton control.
+        /// gameToAddList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DeleteButton;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl gameToAddList;
+        
+        /// <summary>
+        /// addToListButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addToListButton;
         
         /// <summary>
         /// gameToAddListRepeater control.

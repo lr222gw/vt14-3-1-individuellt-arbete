@@ -179,6 +179,26 @@ namespace Spellistaren.model
         {
             ListDAL.RemoveGameFromList(ListID, GameID);
         }
+        public void AddGameToList(int GameID, int ListID)
+        {
+            ListDAL.AddGameToList(GameID, ListID);
+        }
+        public void DeleteGame(int GameID)
+        {
+            GameDAL.DeleteGame(GameID, 1);
+        }
+        public bool existonlistBool(int List1, int GameID)
+        {
+            List<ListRow> list1 = ListDAL.GetListContent(List1, 1);// hämtar ner listraderna 
+            for (var i = 0; i < list1.Count; i++)
+            {
+                if (list1[i].GameID == GameID) // kollar om det finns en listrad med samma id
+                {
+                    return false; // returnerar false om det gör det
+                }
+            }
+            return true; //returnera true om det inte gör det..
+        }
 
     }
 }
