@@ -78,7 +78,7 @@ padding: 0px;
 margin: 0;
 }
 
-#listContent {
+#listContent, #gameToAddList, #allGameList {
 width: 22%;
 display: block;
 background-color: gray;
@@ -94,17 +94,17 @@ float: left;
 margin-left: 15%;
 margin-bottom: 30px;
 }
-#listContent ul li a {
+#listContent ul li a, #gameToAddList ul li a, #allGameList ul li a {
 background-color: rgb(182, 181, 181);
 display: block;
 padding: 2px;
 border-bottom: black 1px solid;
 text-decoration: none;
 }
-#listContent ul {
+#listContent ul, #gameToAddList ul, #allGameList ul {
 padding: 0px;
 margin: 0;
 }
-#listContent ul li a:hover {
+#listContent ul li a:hover, #gameToAddList ul li a:hover, #allGameList ul li a:hover{
 background-color: rgb(99, 99, 99);
 }

@@ -27,6 +27,14 @@ namespace Spellistaren.pages
                 GameDetailRepeater.Visible = true;
                 Sendbutton.Visible = true;
             }
+            if (Request.QueryString["amp;GameID"] != null && Request.QueryString["List"] != null) // om både gameID och List finns så är ett spel markerat, då ska man få möjligheten att ta bort det.
+            {
+                DeleteButton.Visible = true;                
+            }
+            if (Request.QueryString["List"] != null)
+            {
+                gameToAddListRepeater.Visible = true;
+            }
 
         }
 
@@ -143,6 +151,21 @@ namespace Spellistaren.pages
         protected void GameDetailRepeater_PageIndexChanging(object sender, FormViewPageEventArgs e)
         {
 
+        }
+        public IEnumerable<Spellistaren.model.List> ListRepeater_GetData()
+        {
+            return Service.GetLists();
+        }
+        public IEnumerable<Spellistaren.model.Game> ListContentRepeater_GetData()
+        {
+            return Service.GetListContent(Convert.ToInt32(Request.QueryString["List"]));
+        }
+
+        protected void DeleteButton_Click(object sender, EventArgs e)
+        {
+            Service.RemoveGameFromList(Convert.ToInt32(Request.QueryString[("List")]), Convert.ToInt32(Request.QueryString["amp;GameID"]));
+            Response.Redirect(Request.RawUrl+"?List="+Convert.ToInt32(Request.QueryString[("List")]));
+            Context.ApplicationInstance.CompleteRequest();
         }
 
 

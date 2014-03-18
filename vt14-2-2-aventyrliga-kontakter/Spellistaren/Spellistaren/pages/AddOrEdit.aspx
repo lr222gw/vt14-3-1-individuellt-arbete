@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="PHTitle" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="PHContent" runat="server">
-    <h1>Lägg till Spel</h1>
+    <h2 id="allGameListHeader">Lägg till Spel</h2>
     <div id="allGameList">
         <asp:Repeater ID="GamelistRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="GamelistRepeater_GetData">
             <HeaderTemplate>
@@ -28,8 +28,8 @@
                         <asp:CompareValidator ID="CV_gamename" runat="server" ErrorMessage="Måste vara mellan 1-65 tecken." Display="Dynamic" ControlToValidate="GameName" Operator="GreaterThan" Text="*" Type="String" ValueToCompare="65"></asp:CompareValidator>
 
                     <label for="CompanyName">Företag</label>
-                    <asp:TextBox runat="server" id="CompanyName" value="<%#: Item.CompanyName %>" ></asp:TextBox>
-                        <asp:CompareValidator runat="server" ID="CV_companyname" ErrorMessage="Måste vara mellan 0-35 tecken." Display="Dynamic" ControlToValidate="CompanyName" Operator="GreaterThan" Text="*" Type="String" ValueToCompare="35"></asp:CompareValidator>
+                    <asp:TextBox runat="server" id="CompanyName" value='<%#: Item.CompanyName %>' ></asp:TextBox>
+                        <asp:CompareValidator runat="server" ID="CV_companyname" ErrorMessage="Måste vara mellan 0-35 tecken." Display="Dynamic" ControlToValidate="CompanyName" Operator="GreaterThan" Text="*" Type="String" ValueToCompare="35" ></asp:CompareValidator>
                     
                     <label for="ReleaseDate">Utgivningsdatum</label>
                     <asp:TextBox runat="server" id="ReleaseDate" value="<%#: Item.ReleaseDate.Value.ToShortDateString()  %>" ></asp:TextBox>   
@@ -55,12 +55,72 @@
         <asp:ValidationSummary ID="ValidationSummary" runat="server" />
         <asp:Button ID="Sendbutton" runat="server" Text="Spara/Uppdatera" OnClick="Sendbutton_Click" Visible="false"/>
     </div>
+    
+    <div id="blackborder"></div>
+
+    <h2 id="ListsHeader">Väljs lista</h2>
+    <div id="Lists">
+        <asp:Repeater ID="ListRepeater" runat="server" ItemType="Spellistaren.model.List" SelectMethod="ListRepeater_GetData">
+            <HeaderTemplate>                
+                <ul>
+            </HeaderTemplate>
+            <ItemTemplate>
+                
+                    <li>
+                        <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null) + "?List=" + Server.UrlEncode((Item.ListID).ToString())  %>' Text='<%#: Item.ListName %>'></asp:HyperLink>
+                    </li>
+                
+            </ItemTemplate>
+            <FooterTemplate>
+                </ul>
+            </FooterTemplate>
+        </asp:Repeater>
+    </div>
+
+    <h2 id="listContentHeader">granska/ta bort spel i listan</h2>
+    <div id="listContent">
+        <asp:Repeater ID="ListContentRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="ListContentRepeater_GetData">
+            <HeaderTemplate>                
+                <ul>
+            </HeaderTemplate>
+                <ItemTemplate>
+                    <li>
+                        <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameID=" + Server.UrlEncode((Item.GameID).ToString())  %>' Text='<%#: Item.GameName %>'></asp:HyperLink>
+                        
+                    </li>
+                </ItemTemplate>
+            <FooterTemplate>
+                </ul>
+            </FooterTemplate>
+        </asp:Repeater>
+        <asp:Button ID="DeleteButton" runat="server" Text="Ta bort valt spel" OnClientClick='return confirm("Säker på att du vill radera spelet från listan?");' OnClick="DeleteButton_Click" Visible="false" />
+    </div>
+
+    <h2 id="gameToAddListHeader">Lägg till spel i listan</h2>
+    <div id="gameToAddList">
+        <asp:Repeater ID="gameToAddListRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="GamelistRepeater_GetData" Visible="false">
+            <HeaderTemplate>
+                
+                <ul>
+            </HeaderTemplate>
+                <ItemTemplate>
+                    <li>
+                        <asp:HyperLink runat="server" Text='<%#: Item.GameName %>' NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameToAddID=" + Server.UrlEncode(Item.GameID.ToString()) %>'></asp:HyperLink>
+                    </li>
+                </ItemTemplate>
+            <FooterTemplate>
+                </ul>
+            </FooterTemplate>
+        </asp:Repeater>
+    </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="OutsideContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="PHScript" runat="server">
     <script type="text/javascript" src="../scripts/script.js" ></script>
 </asp:Content>
+
+
 
 
 

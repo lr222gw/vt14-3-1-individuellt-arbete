@@ -175,6 +175,10 @@ namespace Spellistaren.model
             }
             
         }
+        public void RemoveGameFromList(int ListID, int GameID)
+        {
+            ListDAL.RemoveGameFromList(ListID, GameID);
+        }
 
     }
 }

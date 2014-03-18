@@ -58,7 +58,7 @@ namespace Spellistaren.model
         }
 
         private DateTime? _ReleaseDate;
-        public DateTime? ReleaseDate //TODO: Kolla om det finns något mer snarlikt slq's Date.
+        public DateTime? ReleaseDate //TODO: Kolla om det finns något mer snarlikt slq's Date. DateTime2 ! 
         {
             get{
                 if (_ReleaseDate == null)
