@@ -28,12 +28,18 @@ namespace Spellistaren.pages
                 Sendbutton.Visible = true;
                 EraseButton.Visible = true;
             }
+            if (Request.QueryString["GameID"] == "0")
+            {
+                EraseButton.Visible = false;
+            }
+
             if (Request.QueryString["amp;GameID"] != null && Request.QueryString["List"] != null) // om både gameID och List finns så är ett spel markerat, då ska man få möjligheten att ta bort det.
             {
                 DeleteButton.Visible = true;                
             }
             if (Request.QueryString["List"] != null)
             {
+                gameToAddListHeader.Visible = true;
                 gameToAddList.Visible = true;
                 gameToAddListRepeater.Visible = true;
                 

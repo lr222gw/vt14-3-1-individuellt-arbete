@@ -26,6 +26,7 @@ html {
     padding-bottom: 30px;
     padding-top: 20px;
     height: 100%; /*Ska denna vara här? hmm..*/
+    padding: 5px;
 }
 
 #gameDetails {
@@ -79,7 +80,7 @@ padding: 0px;
 margin: 0;
 }
 
-#listContent, #PHContent_gameToAddList, #allGameList {
+#listContent  {
 width: 22%;
 display: block;
 background-color: gray;
@@ -106,6 +107,7 @@ text-decoration: none;
 padding: 0px;
 margin: 0;
 }
+
 #listContent ul li a:hover, #PHContent_gameToAddList ul li a:hover, #allGameList ul li a:hover{
 background-color: rgb(99, 99, 99);
 }
@@ -125,4 +127,88 @@ min-height: 2px;
 
 .boxes {
 display: block;
+}
+
+#PHContent_gameToAddList, #allGameList {
+width: 100%;
+display: block;
+background-color: gray;
+overflow: auto;
+height: 250px;
+border: 1px solid black;
+box-shadow: black 0 0 20px -5px;
+font-family: sans-serif;
+font-size: 15px;
+line-height: 31px;
+margin-bottom: 30px;
+}
+
+#content2 {
+    float: left;
+    width: 100%;
+
+}
+
+/*Expreiment...*/
+#Lists2 {
+width: 100%;
+display: block;
+background-color: gray;
+overflow: auto;
+height: 250px;
+border: 1px solid black;
+box-shadow: black 0 0 20px -5px;
+font-family: sans-serif;
+line-height: 35px;
+}
+#Lists2 ul li a {
+background-color: rgb(182, 181, 181);
+display: block;
+border-bottom: black 1px solid;
+text-decoration: none;
+}
+#Lists2 ul li a:hover {
+background-color: rgb(99, 99, 99);
+}
+
+#Lists2 ul {
+padding: 0px;
+margin: 0;
+}
+
+#listContent2 {
+width: 100%;
+display: block;
+background-color: gray;
+overflow: auto;
+height: 250px;
+border: 1px solid black;
+box-shadow: black 0 0 20px -5px;
+font-family: sans-serif;
+font-size: 15px;
+line-height: 31px;
+}
+#listContent2 ul li a{
+background-color: rgb(182, 181, 181);
+display: block;
+padding: 2px;
+border-bottom: black 1px solid;
+text-decoration: none;
+}
+#listContent2 ul {
+padding: 0px;
+margin: 0;
+}
+
+#listContent2 ul li a:hover{
+background-color: rgb(99, 99, 99);
+}
+#content1, #content2 {
+    float: left;
+    width: 25%;
+    margin-right: 12%;
+}
+#content3 {
+    float: left;
+    width: 25%;
 }

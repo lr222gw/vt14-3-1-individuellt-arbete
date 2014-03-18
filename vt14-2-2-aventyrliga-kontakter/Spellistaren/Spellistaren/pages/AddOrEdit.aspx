@@ -60,64 +60,70 @@
     <div id="blackborder">
         <asp:ValidationSummary ID="ValidationSummary" runat="server" />
     </div>
-
-    <h2 id="ListsHeader">Väljs lista</h2>
-    <div id="Lists">
-        <asp:Repeater ID="ListRepeater" runat="server" ItemType="Spellistaren.model.List" SelectMethod="ListRepeater_GetData">
-            <HeaderTemplate>                
-                <ul>
-            </HeaderTemplate>
-            <ItemTemplate>
+    
+    <div id="contentListPart">
+        <div id="content1">
+            <h4 id="ListsHeader">Väljs lista</h4>
+            <div id="Lists2">
+                <asp:Repeater ID="ListRepeater" runat="server" ItemType="Spellistaren.model.List" SelectMethod="ListRepeater_GetData">
+                    <HeaderTemplate>                
+                        <ul>
+                    </HeaderTemplate>
+                    <ItemTemplate>
                 
-                    <li>
-                        <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null) + "?List=" + Server.UrlEncode((Item.ListID).ToString())%>'  Text='<%#: Item.ListName %>'></asp:HyperLink> <%-- --%>
-                    </li>
+                            <li>
+                                <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null) + "?List=" + Server.UrlEncode((Item.ListID).ToString())%>'  Text='<%#: Item.ListName %>'></asp:HyperLink> <%-- --%>
+                            </li>
                 
-            </ItemTemplate>
-            <FooterTemplate>
-                </ul>
-            </FooterTemplate>
-        </asp:Repeater>
-    </div>
-
-    <h2 id="listContentHeader">granska/ta bort spel i listan</h2>
-    <div id="listContent">
-        <asp:Button ID="DeleteButton" runat="server" Text="Ta bort valt spel" OnClientClick='return confirm("Säker på att du vill radera spelet från listan?");' OnClick="DeleteButton_Click" Visible="false" />
-        <asp:Repeater ID="ListContentRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="ListContentRepeater_GetData">
-            <HeaderTemplate>                
-                <ul>
-            </HeaderTemplate>
-                <ItemTemplate>
-                    <li>
-                        <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameID=" + Server.UrlEncode((Item.GameID).ToString())  %>' Text='<%#: Item.GameName %>'></asp:HyperLink>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        </ul>
+                    </FooterTemplate>
+                </asp:Repeater>
+            </div>
+        </div>
+        <div id="content2">
+            <h4 id="listContentHeader">Ta bort innehåll</h4>
+            <div id="listContent2">
+                <asp:Button ID="DeleteButton" runat="server" Text="Ta bort valt spel" OnClientClick='return confirm("Säker på att du vill radera spelet från listan?");' OnClick="DeleteButton_Click" Visible="false" />
+                <asp:Repeater ID="ListContentRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="ListContentRepeater_GetData">
+                    <HeaderTemplate>                
+                        <ul>
+                    </HeaderTemplate>
+                        <ItemTemplate>
+                            <li>
+                                <asp:HyperLink runat="server" NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameID=" + Server.UrlEncode((Item.GameID).ToString())  %>' Text='<%#: Item.GameName %>'></asp:HyperLink>
                         
-                    </li>
-                </ItemTemplate>
-            <FooterTemplate>
-                </ul>
-            </FooterTemplate>
-        </asp:Repeater>
-    </div>
-
-    <h2 id="gameToAddListHeader">Lägg till spel i listan</h2>
-    <div runat="server" id="gameToAddList"  Visible="false" >
-        <asp:Button ID="addToListButton" runat="server" Text="Lägg till" OnClick="addToListButton_Click" visible="false" />
-        <asp:Repeater ID="gameToAddListRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="GamelistRepeater_GetData" Visible="false">
-            <HeaderTemplate>
+                            </li>
+                        </ItemTemplate>
+                    <FooterTemplate>
+                        </ul>
+                    </FooterTemplate>
+                </asp:Repeater>
+            </div>
+        </div>
+        <div id="content3">
+            <h4 id="gameToAddListHeader" runat="server" visible="false">Lägg till spel</h4>
+            <div runat="server" id="gameToAddList"  Visible="false" >
+                <asp:Button ID="addToListButton" runat="server" Text="Lägg till" OnClick="addToListButton_Click" visible="false" />
+                <asp:Repeater ID="gameToAddListRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="GamelistRepeater_GetData" Visible="false">
+                    <HeaderTemplate>
                 
-                <ul>
-            </HeaderTemplate>
-                <ItemTemplate>
-                    <li>
-                        <asp:HyperLink ID="listid" runat="server" Text='<%#: Item.GameName %>' NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameToAddID=" + Server.UrlEncode(Item.GameID.ToString()) %>' ></asp:HyperLink> <%--NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameToAddID=" + Server.UrlEncode(Item.GameID.ToString()) %>' --%>
+                        <ul>
+                    </HeaderTemplate>
+                        <ItemTemplate>
+                            <li>
+                                <asp:HyperLink ID="listid" runat="server" Text='<%#: Item.GameName %>' NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameToAddID=" + Server.UrlEncode(Item.GameID.ToString()) %>' ></asp:HyperLink> <%--NavigateUrl='<%#: GetRouteUrl("AddOrEdit", null)+"?List="+ Request.QueryString["List"] + "&GameToAddID=" + Server.UrlEncode(Item.GameID.ToString()) %>' --%>
                         
-                    </li>
-                </ItemTemplate>
-            <FooterTemplate>
-                </ul>
+                            </li>
+                        </ItemTemplate>
+                    <FooterTemplate>
+                        </ul>
                 
-            </FooterTemplate>
-        </asp:Repeater>        
+                    </FooterTemplate>
+                </asp:Repeater>        
+            </div>
+        </div>
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="OutsideContent" runat="server">
