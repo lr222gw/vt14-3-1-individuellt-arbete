@@ -59,6 +59,7 @@
     
     <div id="blackborder">
         <asp:ValidationSummary ID="ValidationSummary" runat="server" />
+        <asp:ValidationSummary ID="ValidationSummary2" runat="server" ValidationGroup="2" />
     </div>
     
     <div id="contentListPart">
@@ -126,6 +127,11 @@
                 </asp:Repeater>        
             </div>
         </div>
+    </div>
+    <div id="addnewList">
+    <asp:TextBox ID="NewListBox"  runat="server" ValidationGroup="2"></asp:TextBox>
+    <asp:Button ID="AddListButton" runat="server" Text="Lägg till lista!" ValidationGroup="2" OnClick="AddListButton_Click" />
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="NewListBox" ErrorMessage="Du måste ange ett namn för att kunna skapa listan" Text="*" ValidationGroup="2"></asp:RequiredFieldValidator>
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="OutsideContent" runat="server">

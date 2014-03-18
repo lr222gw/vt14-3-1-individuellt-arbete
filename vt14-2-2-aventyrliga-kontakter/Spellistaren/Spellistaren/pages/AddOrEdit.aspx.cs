@@ -226,6 +226,13 @@ namespace Spellistaren.pages
             Context.ApplicationInstance.CompleteRequest();
         }
 
+        protected void AddListButton_Click(object sender, EventArgs e)
+        {
+            Service.CreateList(NewListBox.Text);
+            Response.Redirect(GetRouteUrl("AddOrEdit", null));
+            Context.ApplicationInstance.CompleteRequest();
+        }
+
 
     }
 }

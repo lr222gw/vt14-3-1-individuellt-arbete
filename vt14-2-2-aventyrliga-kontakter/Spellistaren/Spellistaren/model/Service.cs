@@ -203,6 +203,10 @@ namespace Spellistaren.model
         {
             _ListDAL.RemoveList(ListID, 1);
         }
+        public void CreateList(string ListName)
+        {
+            ListDAL.CreateList(1, ListName);
+        }
 
     }
 }
