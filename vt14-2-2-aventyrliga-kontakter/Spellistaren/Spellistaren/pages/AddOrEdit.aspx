@@ -63,8 +63,10 @@
     
     <div id="contentListPart">
         <div id="content1">
+            
             <h4 id="ListsHeader">Väljs lista</h4>
             <div id="Lists2">
+                <asp:Button ID="removeListbutton" runat="server" Text="Ta bort vald lista" OnClientClick='return confirm("Säker på att du vill radera denna lista?");' OnClick="removeListbutton_Click"  Visible="false" />
                 <asp:Repeater ID="ListRepeater" runat="server" ItemType="Spellistaren.model.List" SelectMethod="ListRepeater_GetData">
                     <HeaderTemplate>                
                         <ul>

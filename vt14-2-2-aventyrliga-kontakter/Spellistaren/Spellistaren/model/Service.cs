@@ -199,6 +199,10 @@ namespace Spellistaren.model
             }
             return true; //returnera true om det inte gör det..
         }
+        public void RemoveList(int ListID)
+        {
+            _ListDAL.RemoveList(ListID, 1);
+        }
 
     }
 }

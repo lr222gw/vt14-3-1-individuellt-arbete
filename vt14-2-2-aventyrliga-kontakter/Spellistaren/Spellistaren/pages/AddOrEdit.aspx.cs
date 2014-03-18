@@ -42,6 +42,7 @@ namespace Spellistaren.pages
                 gameToAddListHeader.Visible = true;
                 gameToAddList.Visible = true;
                 gameToAddListRepeater.Visible = true;
+                removeListbutton.Visible = true;
                 
             }
 
@@ -214,6 +215,13 @@ namespace Spellistaren.pages
 
         protected void Close_Click(object sender, EventArgs e)
         {
+            Response.Redirect(GetRouteUrl("AddOrEdit", null));
+            Context.ApplicationInstance.CompleteRequest();
+        }
+
+        protected void removeListbutton_Click(object sender, EventArgs e)
+        {
+            Service.RemoveList(Convert.ToInt32(Request.QueryString["List"]));
             Response.Redirect(GetRouteUrl("AddOrEdit", null));
             Context.ApplicationInstance.CompleteRequest();
         }
