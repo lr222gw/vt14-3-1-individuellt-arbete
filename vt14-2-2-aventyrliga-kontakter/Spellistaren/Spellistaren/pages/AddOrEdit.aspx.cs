@@ -50,16 +50,22 @@ namespace Spellistaren.pages
             {
                 addToListButton.Visible = true;
             }
-
+            if(Session["Message"] != null)
+            {
+                succsestext.Text = Session["Message"].ToString();
+                Session["Message"] = null;
+                succsestext.Visible = true;
+            }
+            
 
         }
 
         public IEnumerable<Spellistaren.model.Game> GamelistRepeater_GetData()
         {
-            return Service.GetAllGamesByUserID(); 
+            return Service.GetAllGamesByUserID(); //CHECK
         }
 
-        public Game GameDetailRepeater_GetData()
+        public Game GameDetailRepeater_GetData()//CHECK
         {
             if(Convert.ToInt32(Request.QueryString["GameID"]) != 0){ // Om GameID inte är 0 då ska ett spel hämtas
                 return Service.GetGameDetails(Convert.ToInt32(Request.QueryString["GameID"]));
@@ -80,7 +86,7 @@ namespace Spellistaren.pages
 
                     GameDetailRepeater.FindControl("GameName");
                     if (ModelState.IsValid) // kontrollerar så att fälten som måste vara i fyllda verkligen är det. (spelets namn..)
-                    {
+                    {                       
                         if(IsValid)
                         {
                             var GameName = GameDetailRepeater.FindControl("GameName") as TextBox;
@@ -111,7 +117,8 @@ namespace Spellistaren.pages
                                 //ModelState.AddModelError(string.Empty, problem); 
                             }
                             else
-                            {                        
+                            {
+                                Session["Message"] = "Spelet lyckades läggas in!";
                                 Response.Redirect(GetRouteUrl("AddOrEdit", null)); //Gör en PRG
                                 Context.ApplicationInstance.CompleteRequest();
                             }
@@ -124,21 +131,27 @@ namespace Spellistaren.pages
                     try { 
                         //hör behöver jag inte kolla om något är Valid eller inte, just för att man inte kan skicka med ogiltiga värden.. 
                         //(tex: du kan ej skicka med null om du inte anger något, då skickas placeholder värdet med istället..
-
-                        //Nu gör jag en array med alla dessa saker och skickar listan till Service.EditGame() där datan från listan sammansätts och blir ett objekt.
-                        TextBox[] textboxArr = new TextBox[7];
-                        textboxArr[0] = GameDetailRepeater.FindControl("GameName") as TextBox;
-                        textboxArr[1] = GameDetailRepeater.FindControl("CompanyName") as TextBox;
-                        textboxArr[2] = GameDetailRepeater.FindControl("ReleaseDate") as TextBox;
-                        textboxArr[3] = GameDetailRepeater.FindControl("PlayersOffline") as TextBox;
-                        textboxArr[4] = GameDetailRepeater.FindControl("PlayersOnline") as TextBox;
-                        textboxArr[5] = GameDetailRepeater.FindControl("Story") as TextBox;
-                        textboxArr[6] = GameDetailRepeater.FindControl("CustomNote") as TextBox;
+                        if(IsValid){
+                            TextBox[] textboxArr = new TextBox[7];
+                            textboxArr[0] = GameDetailRepeater.FindControl("GameName") as TextBox;
+                            textboxArr[1] = GameDetailRepeater.FindControl("CompanyName") as TextBox;
+                            textboxArr[2] = GameDetailRepeater.FindControl("ReleaseDate") as TextBox;
+                            textboxArr[3] = GameDetailRepeater.FindControl("PlayersOffline") as TextBox;
+                            textboxArr[4] = GameDetailRepeater.FindControl("PlayersOnline") as TextBox;
+                            textboxArr[5] = GameDetailRepeater.FindControl("Story") as TextBox;
+                            textboxArr[6] = GameDetailRepeater.FindControl("CustomNote") as TextBox;
                      
                    
-                        Service.EditGame(textboxArr, gameid);
-                        Response.Redirect(GetRouteUrl("AddOrEdit", null)); //Gör en PRG
-                        Context.ApplicationInstance.CompleteRequest();
+                            Service.EditGame(textboxArr, gameid);
+                            Session["Message"] = "Spelet lyckades redigeras!";
+                            Response.Redirect(GetRouteUrl("AddOrEdit", null)); //Gör en PRG
+                            Context.ApplicationInstance.CompleteRequest();
+                        }
+                        else
+                        {
+                            throw new ArgumentException("Datan var ej giltig");
+                        }
+
                     }
                     catch(Exception ex){ 
                     Page.Validators.Add(new CustomValidator{
@@ -149,49 +162,72 @@ namespace Spellistaren.pages
                 }
             
         }
-        public string TextBoxValue(RepeaterItemCollection itm, string controlID ) // denna metod är till för att hämta ut värden ur textboxar på en Repeater..
-        {               //Metoden tar emot två parametrar: itm = Den repeater.Item List som controllen ska letas i. controlID = ID't på kontrollen vi letar efter..
-            for (var i = 0; i < itm.Count; i++ )
-            {
+        //public string TextBoxValue(RepeaterItemCollection itm, string controlID ) // denna metod är till för att hämta ut värden ur textboxar på en Repeater..
+        //{               //Metoden tar emot två parametrar: itm = Den repeater.Item List som controllen ska letas i. controlID = ID't på kontrollen vi letar efter..
+        //    for (var i = 0; i < itm.Count; i++ )
+        //    {
                 
-            }
-            return null;
-        } 
+        //    }
+        //    return null;
+        //} 
 
-        protected void addnewgame_Click(object sender, EventArgs e)
+        protected void addnewgame_Click(object sender, EventArgs e)//Check
         {
             Response.Redirect(GetRouteUrl("AddOrEdit", null) + "?GameID=0");
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        protected void GameDetailRepeater_PageIndexChanging(object sender, FormViewPageEventArgs e)
-        {
-
-        }
-        public IEnumerable<Spellistaren.model.List> ListRepeater_GetData()
+        public IEnumerable<Spellistaren.model.List> ListRepeater_GetData() //Check
         {
             return Service.GetLists();
         }
-        public IEnumerable<Spellistaren.model.Game> ListContentRepeater_GetData()
+        public IEnumerable<Spellistaren.model.Game> ListContentRepeater_GetData()//Check
         {
             return Service.GetListContent(Convert.ToInt32(Request.QueryString["List"]));
         }
 
-        protected void DeleteButton_Click(object sender, EventArgs e)
+        protected void DeleteButton_Click(object sender, EventArgs e)//Check
         {
-            Service.RemoveGameFromList(Convert.ToInt32(Request.QueryString[("List")]), Convert.ToInt32(Request.QueryString["amp;GameID"]));
-            Response.Redirect(GetRouteUrl("AddOrEdit", null)+"?List="+Convert.ToInt32(Request.QueryString[("List")]));
-            Context.ApplicationInstance.CompleteRequest();
+            try { 
+                Service.RemoveGameFromList(Convert.ToInt32(Request.QueryString[("List")]), Convert.ToInt32(Request.QueryString["amp;GameID"]));
+                Session["Message"] = "Spelet togs bort från listan!";
+                Response.Redirect(GetRouteUrl("AddOrEdit", null)+"?List="+Convert.ToInt32(Request.QueryString[("List")]));
+                Context.ApplicationInstance.CompleteRequest();
+                
+            }
+            catch(Exception ex)
+            {
+                Page.Validators.Add(new CustomValidator
+                {
+                    ErrorMessage = "Något är fel med den inmatade datan.." + ex,
+                    IsValid = false
+                });
+            }
         }
 
-        protected void addToListButton_Click(object sender, EventArgs e)
+        protected void addToListButton_Click(object sender, EventArgs e)//Check
         {
             if (Service.existonlistBool(Convert.ToInt32(Request.QueryString["List"]), Convert.ToInt32(Request.QueryString["amp;GameToAddID"])))
             {
-                Service.AddGameToList(Convert.ToInt32(Request.QueryString["amp;GameToAddID"]), Convert.ToInt32(Request.QueryString["List"]));
-                Response.Redirect(GetRouteUrl("AddOrEdit", null) + "?List=" + Convert.ToInt32(Request.QueryString[("List")]));
-                Context.ApplicationInstance.CompleteRequest();
-                //TODO: lägg till meddelande angående "Finns redan i listan"
+                try
+                {
+                    Service.AddGameToList(Convert.ToInt32(Request.QueryString["amp;GameToAddID"]), Convert.ToInt32(Request.QueryString["List"]));
+
+                    Session["Message"] = "Spelet lades till i listan!";
+                    Response.Redirect(GetRouteUrl("AddOrEdit", null) + "?List=" + Convert.ToInt32(Request.QueryString[("List")]));
+                    Context.ApplicationInstance.CompleteRequest();
+
+                }
+                catch(Exception ex)
+                {
+                    Page.Validators.Add(new CustomValidator
+                    {
+                        IsValid = false,
+                        ErrorMessage = "Något gick fel när spelet skulle läggas in i listan"+ex
+                    });
+                }
+                
+
             }
             else
             {
@@ -203,36 +239,92 @@ namespace Spellistaren.pages
             }
         }
 
-        protected void EraseButton_Click(object sender, EventArgs e)
+        protected void EraseButton_Click(object sender, EventArgs e)//Check
         {
+            try
+            {
+                Service.DeleteGame(Convert.ToInt32(Request.QueryString["GameID"]));
+
+                Session["Message"] = "Spelet  är nu borta..!";
+                Response.Redirect(GetRouteUrl("AddOrEdit", null));
+                Context.ApplicationInstance.CompleteRequest();
+            }catch(Exception ex)
+            {
+                Page.Validators.Add(new CustomValidator
+                {
+                    IsValid = false,
+                    ErrorMessage = "Spelet lyckades inte tas bort.."+ex
+                });
+            }
             
-            Service.DeleteGame(Convert.ToInt32(Request.QueryString["GameID"]));
-            Response.Redirect(GetRouteUrl("AddOrEdit", null));
-            Context.ApplicationInstance.CompleteRequest();
             
             
         }
 
-        protected void Close_Click(object sender, EventArgs e)
+        protected void Close_Click(object sender, EventArgs e)//Check
         {
             Response.Redirect(GetRouteUrl("AddOrEdit", null));
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        protected void removeListbutton_Click(object sender, EventArgs e)
+        protected void removeListbutton_Click(object sender, EventArgs e)//Check
         {
-            Service.RemoveList(Convert.ToInt32(Request.QueryString["List"]));
-            Response.Redirect(GetRouteUrl("AddOrEdit", null));
-            Context.ApplicationInstance.CompleteRequest();
+            if (Service.doesListExistBool(Convert.ToInt32(Request.QueryString["List"]))) //kotnrollerar om det finns en lista med ett sånt id som man vill ta bort..
+            {//kontrollerar om det finns en lista med det ID't..
+                try
+                {
+                    Service.RemoveList(Convert.ToInt32(Request.QueryString["List"]));
+
+                    Session["Message"] = "Listan är nu borttagen!";
+                    Response.Redirect(GetRouteUrl("AddOrEdit", null));
+                    Context.ApplicationInstance.CompleteRequest();
+                }
+                catch(Exception ex)
+                {
+                    Page.Validators.Add(new CustomValidator
+                    {
+                        IsValid = false,
+                        ErrorMessage = "Något gick fel när listan skulle tas bort.."+ex
+                    });
+                }
+                
+            }
+            else
+            {
+                Page.Validators.Add(new CustomValidator
+                {
+                    IsValid = false,
+                    ErrorMessage = "Finns ingen lista med ett sådant id.."
+                });
+            }
         }
 
         protected void AddListButton_Click(object sender, EventArgs e)
         {
-            Service.CreateList(NewListBox.Text);
-            Response.Redirect(GetRouteUrl("AddOrEdit", null));
-            Context.ApplicationInstance.CompleteRequest();
+            try
+            {
+                Service.CreateList(NewListBox.Text);
+
+                Session["Message"] = "Listan är nu tillagd!";
+                Response.Redirect(GetRouteUrl("AddOrEdit", null));
+                Context.ApplicationInstance.CompleteRequest();
+            }
+            catch (Exception ex)
+            {
+                Page.Validators.Add(new CustomValidator
+                {
+                    IsValid = false,
+                    ErrorMessage = "Något gick fel när listan skulle läggas till..."+ex
+                });
+
+            }
+
         }
 
+        protected void travelbutton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(GetRouteUrl("Default", null));
+        }
 
     }
 }

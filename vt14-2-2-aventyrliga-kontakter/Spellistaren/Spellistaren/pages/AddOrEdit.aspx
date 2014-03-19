@@ -1,7 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="AddOrEdit.aspx.cs" Inherits="Spellistaren.pages.AddOrEdit" %>
+﻿<%@ Page Title="Redigera" Language="C#" MasterPageFile="~/pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="AddOrEdit.aspx.cs" Inherits="Spellistaren.pages.AddOrEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="PHTitle" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="PHContent" runat="server">
+    <asp:Button ID="travelbutton" Text="Till Listorna" runat="server" OnClick="travelbutton_Click"/>
+    <asp:Label ID="succsestext" runat="server" Text="Label" Visible="false"></asp:Label>
     <h2 id="allGameListHeader">Lägg till Spel</h2>
     <div id="allGameList">
         <asp:Repeater ID="GamelistRepeater" runat="server" ItemType="Spellistaren.model.Game" SelectMethod="GamelistRepeater_GetData">
@@ -21,7 +24,7 @@
     <asp:Button ID="addnewgame" runat="server" Text="Nytt spel +" OnClick="addnewgame_Click"  CausesValidation="false" UseSubmitBehavior="false"/>
     <asp:Button ID="Close" runat="server" Text="close" OnClick="Close_Click"  CausesValidation="false" UseSubmitBehavior="false"/>
     <div id="GameDetails">
-        <asp:FormView ID="GameDetailRepeater" ItemType="Spellistaren.model.Game" SelectMethod="GameDetailRepeater_GetData" runat="server" Visible="false" OnPageIndexChanging="GameDetailRepeater_PageIndexChanging">
+        <asp:FormView ID="GameDetailRepeater" ItemType="Spellistaren.model.Game" SelectMethod="GameDetailRepeater_GetData" runat="server" Visible="false">
             <ItemTemplate>
                     <label for="GameName">Spelets namn</label>
                     <asp:TextBox ID="GameName" value="<%#: (Item.GameName) %>" runat="server" CssClass="boxes"></asp:TextBox>
@@ -49,7 +52,7 @@
                         <asp:CompareValidator ID="CV_story" runat="server"  ErrorMessage="Måste vara mellan 0-1000 tecken" ControlToValidate="Story" Type="String" Display="Dynamic" Text="*" ValueToCompare="1000" Operator="GreaterThan"></asp:CompareValidator>
                     
                     <label for="CustomNote">Egen notering</label>
-                    <asp:TextBox runat="server" id="CustomNote" TextMode="MultiLine" Text="<%#: Item.CustomNote %>" CssClass="boxes"></asp:TextBox>
+                    <asp:TextBox runat="server" id="CustomNote" TextMode="MultiLine" Text="<%#: (Item.CustomNote) %>" CssClass="boxes"></asp:TextBox>
                         <asp:CompareValidator ID="cv_CustomNote" runat="server"  ErrorMessage="Måste vara mellan 0-2000 tecken" ControlToValidate="Story" Type="String" Display="Dynamic" Text="*" ValueToCompare="2000" Operator="GreaterThan"></asp:CompareValidator>
                 </ItemTemplate>
         </asp:FormView>        
@@ -129,9 +132,10 @@
         </div>
     </div>
     <div id="addnewList">
-    <asp:TextBox ID="NewListBox"  runat="server" ValidationGroup="2"></asp:TextBox>
-    <asp:Button ID="AddListButton" runat="server" Text="Lägg till lista!" ValidationGroup="2" OnClick="AddListButton_Click" />
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="NewListBox" ErrorMessage="Du måste ange ett namn för att kunna skapa listan" Text="*" ValidationGroup="2"></asp:RequiredFieldValidator>
+        <asp:TextBox ID="NewListBox"  runat="server" ValidationGroup="2"></asp:TextBox>
+        <asp:Button ID="AddListButton" runat="server" Text="Lägg till lista!" ValidationGroup="2" OnClick="AddListButton_Click" />
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="NewListBox" ErrorMessage="Du måste ange ett namn för att kunna skapa listan" Text="*" ValidationGroup="2"></asp:RequiredFieldValidator>
+        <asp:CompareValidator ID="NewListBoxCV" runat="server" ControlToValidate="NewListBox" Type="String" Operator="LessThan" ValueToCompare="30" ErrorMessage="Måste vara bokstäver och mellan 1-30 tecken"></asp:CompareValidator>
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="OutsideContent" runat="server">

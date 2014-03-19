@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spellistaren.pages.Shared.Site" ViewStateMode="Disabled"  %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spellistaren.pages.Shared.Site" ViewStateMode="Disabled"  %>
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
     <asp:ContentPlaceHolder ID="PHTitle" runat="server">
         <title>Spellistaren</title>
     </asp:ContentPlaceHolder>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <link rel="stylesheet" href="~/style/style.css" />
 </head>
 <body>

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Listor" Language="C#" MasterPageFile="~/pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Spellistaren.pages.Default" %>
 
 <asp:Content ID="Content" ContentPlaceHolderID="PHContent" runat="server">
-
+    <asp:Button ID="travelbutton" runat="server" Text="Till Redigering" OnClick="travelbutton_Click" />
     <div id="Lists">
         <asp:Repeater ID="ListRepeater" runat="server" ItemType="Spellistaren.model.List" SelectMethod="ListRepeater_GetData">
             <HeaderTemplate>

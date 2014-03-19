@@ -13,6 +13,24 @@ namespace Spellistaren.pages {
     public partial class AddOrEdit {
         
         /// <summary>
+        /// travelbutton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button travelbutton;
+        
+        /// <summary>
+        /// succsestext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label succsestext;
+        
+        /// <summary>
         /// GamelistRepeater control.
         /// </summary>
         /// <remarks>
@@ -182,5 +200,14 @@ namespace Spellistaren.pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
+        /// NewListBoxCV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator NewListBoxCV;
     }
 }

@@ -215,3 +215,9 @@ background-color: rgb(99, 99, 99);
 #addnewList {
 float: left;
 }
+#PHContent_succsestext {
+color: green;
+font-size: 2em;
+font-family: sans-serif;
+box-shadow: rgb(0, 240, 58) 0 0 43px -10px, inset rgb(61, 255, 0) 0 0 70px -11px;
+}

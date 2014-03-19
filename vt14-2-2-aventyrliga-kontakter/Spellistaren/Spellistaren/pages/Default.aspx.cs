@@ -40,5 +40,9 @@ namespace Spellistaren.pages
             
             return Service.GetGameDetails(Convert.ToInt32(Request.QueryString["amp;GameID"]));
         }
+        protected void travelbutton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(GetRouteUrl("AddOrEdit", null));
+        }
     }
 }

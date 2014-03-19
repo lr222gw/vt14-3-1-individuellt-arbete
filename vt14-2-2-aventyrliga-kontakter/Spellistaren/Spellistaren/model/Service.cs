@@ -24,7 +24,7 @@ namespace Spellistaren.model
             get { return _GameDAL ?? (_GameDAL = new GameDAL()); } //om _GameDAL är Null, sätt ListDAL till ny GameDAL...
         }
 
-        public IEnumerable<Game> GetListContent(int ListID) 
+        public IEnumerable<Game> GetListContent(int ListID)
         {
             var Listcontent =  ListDAL.GetListContent(ListID, 1); //hårdkodar in värdet 1 då programmet är begränsat till 1 användare..
             var ListcontentAndName = new List<Game>();
@@ -168,7 +168,17 @@ namespace Spellistaren.model
                 gameToEdit.CustomNote = tbArr[6].Text;
                 gameToEdit.GameName = tbArr[0].Text;
 
-                GameDAL.EditGame(gameToEdit);
+                var validationContext = new ValidationContext(gameToEdit); // skapar ett validationcontext objekt för att validera datan i gameToAdd..
+                var validationErrorList = new List<ValidationResult>();
+                if (!Validator.TryValidateObject(gameToEdit, validationContext, validationErrorList, true))
+                {
+                    //om validering (^) misslyckas så ska ett undantag kastas..
+                    string problem = "Spelet innehöll ogiltig data..";
+                    throw new ValidationException(problem);
+                }else{
+                    GameDAL.EditGame(gameToEdit);
+                }
+                
             }catch
             {
                 throw new Exception("Något är fel på datan som försökte matas in.");      
@@ -206,6 +216,19 @@ namespace Spellistaren.model
         public void CreateList(string ListName)
         {
             ListDAL.CreateList(1, ListName);
+        }
+        public bool doesListExistBool(int LookingForThisListID)
+        {
+            List<List> listor = ListDAL.GetLists(1) as List<List>;
+            for (var i = 0; i < listor.Count; i++ )
+            {
+                if (listor[i].ListID == LookingForThisListID)
+                { // vi letar efter ett list-id som ska matcha listId't vi skickat in, om vi hittar så finns listan och vi returnerar true
+                    return true;
+                }
+            }
+            return false;
+            
         }
 
     }
